@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int m, n, k;
+
+bool Check(int x) {
+    return (m >= 2 * x && n >= x && m + n - 3 * x >= k);
+}
+
+int main() {
+    cin >> m >> n >> k;
+    int low, hight = min(m/2, n), res;
+    while (low <= hight) {
+        int mid = (low + hight) / 2;
+        if (Check(mid)) {
+            res = mid;
+            low = mid + 1;
+        } else hight = mid - 1;
+    }
+
+    cout << res << "\n";
+
+    return 0;
+}
