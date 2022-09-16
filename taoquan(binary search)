@@ -10,6 +10,7 @@ bool Check(int x) {
 
 int main() {
     cin >> m >> n >> k;
+    
     int low, hight = min(m/2, n), res;
     while (low <= hight) {
         int mid = (low + hight) / 2;
