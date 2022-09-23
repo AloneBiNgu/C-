@@ -5,8 +5,8 @@ using namespace std;
 int n, m, soKhop, soCau, thuTu, thoiGian;
 int joint[1000005], low[1000005], num[1000005], parent[1000005], child[1000005];
 vector<int> args[1000005];
-vector<int> dinh;
 vector<pair<int, int>> haiDinhMut;
+map<pair<int, int>, int> mp;
 
 void dfs(int u) {
     num[u] = low[u] = ++thoiGian;
@@ -17,7 +17,7 @@ void dfs(int u) {
             ++child[u];
             dfs(v);
             low[u] = min(low[u], low[v]);
-            if (low[v] == num[v]) {
+            if (low[v] == num[v] && mp[{u, v}] == 1) {
                 soCau++;
                 haiDinhMut.push_back(make_pair(u, v));
             }
@@ -48,6 +48,8 @@ int main() {
         cin >> u >> v;
         args[u].push_back(v);
         args[v].push_back(u);
+        mp[{u, v}]++;
+        mp[{v, u}]++;
     }
 
     for (int i = 1; i <= n; i++) {
