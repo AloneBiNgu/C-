@@ -5,34 +5,33 @@ using namespace std;
 const long long maxN = 4 * 1e5 + 7;
 
 long long n, m;
-list<long long> args[maxN];
+int visited[maxN];
+vector<pair<int, int>> adj[maxN];
 
 void euler(long long u) {
     stack<long long> st;
-    vector<long long> ec;
+    vector<long long> path;
     st.push(u);
     while (!st.empty()) {
-        long long x = st.top();
-        list<long long>::iterator i;
-        for (i = args[x].begin(); i != args[x].end(); i++) {
-            long long v = *i;
-            if (v != -1) {
-                list<long long>::iterator iv = find(args[x].begin(), args[x].end(), v);
-                *iv = -1;
-
-                list<long long>::iterator iu  = find(args[v].begin(), args[v].end(), x);
-                *iu = -1;
-                st.push(v);
+        long long v = st.top();
+        int f = 0;
+        while (!adj[v].empty()) {
+            auto [u, i] = adj[v].back(); adj[v].pop_back();
+            // cout << u << " ";
+            if (!visited[i]) {
+                st.push(u);
+                visited[i] = 1;
+                f = 1;
                 break;
             }
         }
-        if (x == st.top()) {
-            ec.push_back(x);
+        if (!f) {
+            path.push_back(v);
             st.pop();
         }
     }
-    for (int i = ec.size() - 1; i >= 0; i--) {
-        cout << ec[i] << " ";
+    for (auto i : path) {
+        cout << i << " ";
     }
 }
 
@@ -45,10 +44,10 @@ int main() {
     freopen("euler.out", "w", stdout);
 
     cin >> n >> m;
-    for (long long i = 1; i <= m; i++) {
+    for (long long i = 0; i < m; i++) {
         long long u, v; cin >> u >> v;
-        args[u].push_back(v);
-        args[v].push_back(u);
+        adj[u].push_back({v, i});
+        adj[v].push_back({u, i});
     }
 
     euler(1);
