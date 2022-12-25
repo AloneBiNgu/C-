@@ -9,7 +9,7 @@ vector<pair<int, int>> args[maxN];
 
 void dijkstra(int s) {
     vector<int> d(n + 1, INT_MAX);
-    vector<int> f(n + 1, INT_MAX);
+    vector<long long> f(n + 1, INT_MAX);
     d[s] = 0;
     f[s] = 1;
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
